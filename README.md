@@ -1,16 +1,12 @@
-# nyoba
+# Sendthesonggapp
 
 A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+SendTheSong is an Android application designed to provide users with easy access to song references from sendthesong.xyz.This app leverages the powerful functionalities of the Dio package for seamless HTTP requests and efficient data handling. Users can browse, search, and retrieve song information effortlessly, all within a sleek and user-friendly interface.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Requirements:
+  -  Android Studio
+  -  Flutter SDK
+  -  Dio package
