@@ -15,4 +15,40 @@ class AppBarr extends StatelessWidget {
   }
 }
 
+class Alertbox extends StatelessWidget {
+  Alertbox({super.key, required this.pesanalertbox});
+
+  String pesanalertbox = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.only(top: 20, bottom: 20, left: 15, right: 15),
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(15)
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(child: Icon(Icons.warning_amber_sharp, size: 90,color: Colors.white,),),
+            SizedBox(height: 20,),
+            Text(pesanalertbox, style: TextStyle(color: Colors.white,fontSize: 20), textAlign: TextAlign.center,),
+            SizedBox(height: 15,),
+            ElevatedButton(onPressed: (){
+              Navigator.of(context).pop();
+            },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                child: Text('Kembali', style: TextStyle(color: Colors.white), ),)
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 
