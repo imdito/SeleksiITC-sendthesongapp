@@ -8,6 +8,7 @@ class msgpage extends StatelessWidget {
   String penerima = '';
   String pesan = '';
   String link = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

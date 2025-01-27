@@ -16,8 +16,6 @@ class Search extends StatefulWidget {
 
 class SearchState extends State<Search> {
 
-  String cari = '';
-
   List<dynamic> Datapesan = [];
   List<dynamic> Filtereddata = [];
   TextEditingController searchtext = TextEditingController();
@@ -29,15 +27,17 @@ class SearchState extends State<Search> {
           'https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendmsg.json',);
       Datapesan = Datamsg.data;
       print(Datapesan.length);
-      cari = searchtext.text;
-      Filtereddata = Datapesan.where((element) => element['penerima'] == cari).toList();
+      Filtereddata = Datapesan.where((element) => element['penerima'] == searchtext.text).toList();
+      if(Filtereddata.isEmpty){
+        showDialog(context: context, builder: (context){
+          return Alertbox(pesanalertbox: 'Maaf penerima dengan nama ini tidak ditemukan :(');
+        });
+      }
 
       setState((){});
     }catch(error){
       showDialog(context: context, builder: (context){
-        return AlertDialog(
-          title: Text('Maaf! url sedang tidak valid'),
-        );
+        return Alertbox(pesanalertbox: "Maaf Url sedang tidak valid!");
       });
     }
   }
@@ -75,7 +75,7 @@ class SearchState extends State<Search> {
                       ),)
                     ],
                   ),
-                    Expanded(
+                  Expanded(
                     child: ListView.builder(
                         itemCount: Filtereddata.length,
 

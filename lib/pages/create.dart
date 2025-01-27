@@ -35,12 +35,17 @@ TextEditingController link = TextEditingController();
           "link" : link.text
       };
       Response response = await dio.patch('https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendmsg/${Datapesan.length}.json', data: data);
+      penerima.text = '';
+      pesan.text = '';
+      link.text = '';
+      showDialog(context: context, builder: (context){
+        return Alertbox(pesanalertbox: 'Pesan sukses dikirm!');
+
+      });
       setState(() {});
     }catch(error){
       showDialog(context: context, builder: (context){
-        return AlertDialog(
-          title: Text('Maaf! url sedang tidak valid'),
-        );
+        return Alertbox(pesanalertbox: 'Maaf URL saat ini sedang tidak valid, silahkan periksa koneksi internet anda!');
 
       });
     }
