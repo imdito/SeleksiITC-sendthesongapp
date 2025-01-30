@@ -1,12 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:nyoba/pages/appbar.dart';
+import 'package:dio/dio.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
 
 void main(){
   runApp(Home());
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  List<dynamic> Datapesan = [];
+
+  Future<void> GetData() async{
+    try{
+      Response Datamsg = await Dio().get(
+        'https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendmsg.json',);
+      Datapesan = Datamsg.data;
+      setState((){});
+    }catch(error){
+      showDialog(context: context, builder: (context){
+        return Alertbox(pesanalertbox: "Maaf Url sedang tidak valid!");
+      });
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    GetData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,6 +164,39 @@ class Home extends StatelessWidget {
                     const Text("You can click on any message card to read the full story and listen to the chosen song!"),
 
                   ],),
+                ),
+                SizedBox(height: 30,),
+                SizedBox(
+                  width: 300,
+                  height: 200,
+                  child: CarouselSlider.builder(
+                      itemCount: Datapesan.isEmpty ? 0 : Datapesan.length,
+                      itemBuilder: (context, int index, realindex){
+                        return Container(
+                          width: 250,
+                          margin: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 10),
+                          padding: EdgeInsets.only(top: 15, left: 20, right: 10, bottom: 10),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          child: (Datapesan.isEmpty) ? Text('Loading') : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('To- ${Datapesan[index]['penerima']}', style: TextStyle(fontSize: 20),),
+                              Text(Datapesan[index]['pesan'], style: TextStyle(fontSize: 35, fontFamily: 'Beanie'),textAlign: TextAlign.left, maxLines: 2, overflow: TextOverflow.ellipsis)
+                            ],
+                          ),
+                        );
+                      },
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        autoPlayInterval: Duration(milliseconds: 2000 ),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        scrollDirection: Axis.horizontal,
+                        viewportFraction: 1,
+
+                      ))
                 ),
                 SizedBox(height: 30,)
               ],

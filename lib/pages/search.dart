@@ -33,7 +33,7 @@ class SearchState extends State<Search> {
           return Alertbox(pesanalertbox: 'Maaf penerima dengan nama ini tidak ditemukan :(');
         });
       }
-
+      FocusScope.of(context).unfocus();
       setState((){});
     }catch(error){
       showDialog(context: context, builder: (context){
@@ -82,6 +82,10 @@ class SearchState extends State<Search> {
                         itemBuilder: (context, int index ){
                           return InkWell(
                             onTap: (){
+                              FocusScopeNode focusScopeNode = FocusScope.of(context);
+                              if(!focusScopeNode.hasPrimaryFocus){
+                                focusScopeNode.unfocus();
+                              }
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context){
                                     return msgpage(penerima: Filtereddata[index]['penerima'], pesan: Filtereddata[index]['pesan'], link: Filtereddata[index]['link'],);
