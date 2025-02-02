@@ -17,11 +17,16 @@ class Add extends StatefulWidget {
 class _AddState extends State<Add> {
 Dio dio = Dio();
 
+
 List<dynamic> Datapesan = [];
 
 TextEditingController penerima = TextEditingController();
 TextEditingController pesan = TextEditingController();
 TextEditingController link = TextEditingController();
+
+
+
+
   void adddata() async{
 
     try{
@@ -29,10 +34,11 @@ TextEditingController link = TextEditingController();
         'https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendmsg.json',);
       Datapesan = Datamsg.data;
       print('get data :  ${Datapesan.length}');
+      List<String> ambilid = link.text.split("/");
       Map<String, dynamic> data = {
           "penerima": penerima.text,
           "pesan": pesan.text,
-          "link" : link.text
+          "link" : ambilid[4]
       };
       Response response = await dio.patch('https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendmsg/${Datapesan.length}.json', data: data);
       penerima.text = '';

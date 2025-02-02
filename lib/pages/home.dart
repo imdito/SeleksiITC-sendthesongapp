@@ -17,6 +17,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<dynamic> Datapesan = [];
+  String accessToken = '';
+
 
   Future<void> GetData() async{
     try{
@@ -30,6 +32,7 @@ class _HomeState extends State<Home> {
       });
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState
