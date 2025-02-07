@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
+
 
 class AppBarr extends StatelessWidget {
   const AppBarr({super.key});
@@ -17,9 +17,9 @@ class AppBarr extends StatelessWidget {
 }
 
 class Alertbox extends StatelessWidget {
-  Alertbox({super.key, required this.pesanalertbox});
+  const Alertbox({super.key, required this.pesanalertbox});
 
-  String pesanalertbox = '';
+  final String pesanalertbox;
 
   @override
   Widget build(BuildContext context) {

@@ -26,7 +26,6 @@ class SearchState extends State<Search> {
       Response Datamsg = await Dio().get(
           'https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendmsg.json',);
       Datapesan = Datamsg.data;
-      print(Datapesan.length);
       Filtereddata = Datapesan.where((element) => element['penerima'] == searchtext.text).toList();
       if(Filtereddata.isEmpty){
         showDialog(context: context, builder: (context){
@@ -66,7 +65,7 @@ class SearchState extends State<Search> {
                           child: Icon(Icons.search, color: Colors.white,)),
                       SizedBox(width: 10,),
                       Expanded(child: TextField(
-                        controller: searchtext,
+                        controller: searchtext, // untuk dapetin nama yang dicari
                         decoration: InputDecoration(
                             hintText: 'Masukkan nama penerima!',
                             helperMaxLines: 1,
@@ -78,11 +77,10 @@ class SearchState extends State<Search> {
                   Expanded(
                     child: ListView.builder(
                         itemCount: Filtereddata.length,
-
                         itemBuilder: (context, int index ){
-                          return InkWell(
+                          return InkWell( // tampilin pesan pesan dengan nama yang dicari
                             onTap: (){
-                              FocusScopeNode focusScopeNode = FocusScope.of(context);
+                              FocusScopeNode focusScopeNode = FocusScope.of(context); // tutup keyboard
                               if(!focusScopeNode.hasPrimaryFocus){
                                 focusScopeNode.unfocus();
                               }
