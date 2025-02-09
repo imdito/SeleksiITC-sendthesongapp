@@ -5,7 +5,7 @@ Sendthesong adalah aplikasi berbasis flutter yang dibuat untuk menyeselesaikan t
 # Halaman utama / Home
   Pada halaman ini, aplikasi menampilkan tampilan awal berupa menu pilihan untuk membuat pesan atau mencari pesan. Pada tampilan ini juga terdapat. pesan berjalan di bagian paling bawah halaman yang saya buat dengan bantuan    package carousell slider. 
 # Halaman create message 
-  Pada halam ini, terdapat 3 field yand dapat diisi pengirim, pada field terakhir pengirim harus mengirimkan lagu berupa link spotify lagu tersebut.
+  Pada halam ini, terdapat 3 field yand dapat diisi pengirim, pada field terakhir pengirim harus mengirimkan lagu dengan mencari lagu dengan memasukkan nama lagu lalu memilih lagu yang ingin dikirim.
 # Halaman search message
   Pada halaman ini, terdapat satu textfield yang digunakan untuk mencari nama penerima. Jika nama penerima tidak ada maka akan muncul popup bahwa nama penerima tidak ditemukan
 # Halaman pesan
@@ -17,3 +17,6 @@ Requirements:
   -  Dio package
   -  carousel_slider
   -  internet connection
+
+# Installasi
+  Dalam melakuakan instalasi silahkan melakukan request pull atau menginstall [aplikasi send the song ](https://github.com/imdito/sendthesongapp_muhammadpanditosetiawan_ITCMobile/blob/master/app-release.apk)
