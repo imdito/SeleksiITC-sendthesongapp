@@ -13,80 +13,91 @@ class Add extends StatefulWidget {
   @override
   State<Add> createState() => _AddState();
 }
+class datalagu {
+  String idlagu = '';
+  String namalagu = '';
+  String penyanyi = '';
+  String gambar = '';
+
+  datalagu({required this.idlagu, required this.namalagu, required this.penyanyi, required this.gambar});
+}
+
+class datapesan {
+  TextEditingController penerima = TextEditingController();
+  TextEditingController pesan = TextEditingController();
+
+  datapesan({required this.penerima, required this.pesan});
+}
 
 class _AddState extends State<Add> {
-Dio dio = Dio();
 
-List<dynamic> lagu = [];
-List<dynamic> Datapesan = [];
-String accessToken = '';
-String idlagu = '';
-String namalagu = '';
-String penyanyi = '';
-String gambar = '';
-TextEditingController penerima = TextEditingController();
-TextEditingController pesan = TextEditingController();
-TextEditingController search = TextEditingController();
-
-Future<void>gettoken(int index) async{
   Dio dio = Dio();
-  try{
-    Response token = await Dio().get(
-      'https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendtoken.json',);
-    accessToken = token.data[0]['access_token'];
-    await dio.get('https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg', options:
-    Options(headers: {'Authorization' : 'Bearer $accessToken'}));
-    setState(() {});
-    return ;
-  }catch(e){
+  var Datalagu = new datalagu(idlagu: '', namalagu: '', penyanyi: '', gambar: '');
+  var Datapesan = new datapesan(penerima: TextEditingController(), pesan: TextEditingController());
+  List<dynamic> lagu = [];
+  List<dynamic> getpesan = [];
+  String accessToken = '';
+  TextEditingController search = TextEditingController();
 
-    Response post = await Dio().post('https://accounts.spotify.com/api/token',
-        data: {
-          'grant_type': 'client_credentials',
-          'client_id': '055aed8441274633b3ca73d01a2123c0',
-          'client_secret': '82c8fcd919ac4138b7b863abe1cfa4cd',
-        },
-        options: Options(contentType: Headers.formUrlEncodedContentType)
-    );
+  Future<void>gettoken(int index) async{
+    Dio dio = Dio();
+    try{
+      Response token = await Dio().get(
+        'https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendtoken.json',);
+      accessToken = token.data[0]['access_token'];
+      await dio.get('https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg', options:
+      Options(headers: {'Authorization' : 'Bearer $accessToken'}));
+      setState(() {});
+      return ;
+    }catch(e){
 
-    await Dio().patch('https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendtoken/0.json',
-        data: {
-          'access_token' : post.data['access_token']
-        });
-    if(index == 0){
-      Alertbox(pesanalertbox: 'error');
-    }else{
-      return gettoken(index--);
+      Response post = await Dio().post('https://accounts.spotify.com/api/token',
+          data: {
+            'grant_type': 'client_credentials',
+            'client_id': '055aed8441274633b3ca73d01a2123c0',
+            'client_secret': '82c8fcd919ac4138b7b863abe1cfa4cd',
+          },
+          options: Options(contentType: Headers.formUrlEncodedContentType)
+      );
+
+      await Dio().patch('https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendtoken/0.json',
+          data: {
+            'access_token' : post.data['access_token']
+          });
+      if(index == 0){
+        Alertbox(pesanalertbox: 'error');
+      }else{
+        return gettoken(index--);
+      }
     }
   }
-}
 
-Future<dynamic> searchsong() async {
-  Dio dio = Dio();
-  FocusScopeNode focusScopeNode = FocusScope.of(context); // tutup keyboard
-  if(!focusScopeNode.hasPrimaryFocus){
-    focusScopeNode.unfocus();
-  }
-  try {
+  Future<dynamic> searchsong() async {
+    Dio dio = Dio();
+    FocusScopeNode focusScopeNode = FocusScope.of(context); // tutup keyboard
+    if(!focusScopeNode.hasPrimaryFocus){
+      focusScopeNode.unfocus();
+    }
+    try {
 
-    final response = await dio.get(
-      'https://api.spotify.com/v1/search',
-      queryParameters: {
-        'q': 'track:${search.text}',
-        'type': 'track',
-        'market': 'ID',
-        'limit': 10
-      },
-      options: Options(headers: {
-        'Authorization': 'Bearer $accessToken',
-      }),
-    );
-    lagu = response.data['tracks']['items'];
-        setState(() {});
-  }catch(e){
-    return Alertbox(pesanalertbox: 'Errror, silahkan cek koneksi internet!');
+      final response = await dio.get(
+        'https://api.spotify.com/v1/search',
+        queryParameters: {
+          'q': 'track:${search.text}',
+          'type': 'track',
+          'market': 'ID',
+          'limit': 10
+        },
+        options: Options(headers: {
+          'Authorization': 'Bearer $accessToken',
+        }),
+      );
+      lagu = response.data['tracks']['items'];
+          setState(() {});
+    }catch(e){
+      return Alertbox(pesanalertbox: 'Errror, silahkan cek koneksi internet!');
+    }
   }
-}
 
   void adddata() async{
     FocusScopeNode focusScopeNode = FocusScope.of(context); // tutup keyboard
@@ -96,17 +107,17 @@ Future<dynamic> searchsong() async {
     try{
       Response Datamsg = await Dio().get(
         'https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendmsg.json',);
-      Datapesan = Datamsg.data;
+      getpesan = Datamsg.data;
       Map<String, dynamic> data = {
-          "penerima": penerima.text,
-          "pesan": pesan.text,
-          "link" : idlagu
+          "penerima": Datapesan.penerima.text,
+          "pesan": Datapesan.pesan.text,
+          "link" : Datalagu.idlagu
       };
-      await dio.patch('https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendmsg/${Datapesan.length}.json', data: data);
-      penerima.text = '';
-      pesan.text = '';
+      await dio.patch('https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendmsg/${getpesan.length}.json', data: data);
+      Datapesan.penerima.text = '';
+      Datapesan.pesan.text = '';
       search.text = '';
-      idlagu = '';
+      Datalagu.idlagu = '';
       showDialog(context: context, builder: (context){
         return Alertbox(pesanalertbox: 'Pesan sukses dikirm!');
 
@@ -147,7 +158,7 @@ Future<dynamic> searchsong() async {
                     alignment: Alignment.topLeft,
                     child: Text('Recipient Name', textAlign: TextAlign.start,)),
                 TextField(
-                  controller: penerima,
+                  controller: Datapesan.penerima,
                   decoration: InputDecoration(
                     hintText: 'Masukkan nama penerima!',
                     helperMaxLines: 1,
@@ -158,7 +169,7 @@ Future<dynamic> searchsong() async {
                 Align(alignment: Alignment.topLeft,
                 child: Text('Message'),),
                 TextField(
-                  controller: pesan,
+                  controller: Datapesan.pesan,
                   textAlign: TextAlign.left,
                   textAlignVertical: TextAlignVertical.top,
                   maxLines: 6,
@@ -211,10 +222,10 @@ Future<dynamic> searchsong() async {
                               child: InkWell(
                                 onTap: (){
                                   setState(() {
-                                    idlagu = lagu[index]['id'];
-                                    namalagu = lagu[index]['name'];
-                                    penyanyi = lagu[index]['artists'][0]['name'];
-                                    gambar = lagu[index]['album']['images'][0]['url'];
+                                    Datalagu.idlagu = lagu[index]['id'];
+                                    Datalagu.namalagu = lagu[index]['name'];
+                                    Datalagu.penyanyi = lagu[index]['artists'][0]['name'];
+                                    Datalagu.gambar = lagu[index]['album']['images'][0]['url'];
                                     search.text = '';
                                   });
                                 },
@@ -242,7 +253,7 @@ Future<dynamic> searchsong() async {
                         ),
                   ),
                 )
-                 : (idlagu.isNotEmpty) ? Container(
+                 : (Datalagu.idlagu.isNotEmpty) ? Container(
                   padding: EdgeInsets.all(5),
                   height: 80, width: 250,
                   decoration:
@@ -253,7 +264,7 @@ Future<dynamic> searchsong() async {
                   child: SizedBox(
                     child: Row(
                       children: [
-                        Image(image: NetworkImage(gambar)),
+                        Image(image: NetworkImage(Datalagu.gambar)),
                         SizedBox(width: 20,),
                         Flexible(
 
@@ -261,14 +272,14 @@ Future<dynamic> searchsong() async {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                            Text(namalagu, style: TextStyle(
+                            Text(Datalagu.namalagu, style: TextStyle(
                               fontSize: 20,
                               fontFamily: 'Outfit',
                               fontWeight: FontWeight.bold
                             ),
                             overflow: TextOverflow.ellipsis,
                             ),
-                            Text(penyanyi, style: TextStyle(
+                            Text(Datalagu.penyanyi, style: TextStyle(
                               fontSize: 15,
                             ),)
                           ],),
@@ -278,9 +289,9 @@ Future<dynamic> searchsong() async {
                   ) ,
                 ) : Text(''),
                 SizedBox(height: 20,),
-                ElevatedButton(onPressed: (penerima.text.isNotEmpty && idlagu.isNotEmpty) ? adddata : (){},
+                ElevatedButton(onPressed: (Datapesan.penerima.text.isNotEmpty && Datalagu.idlagu.isNotEmpty) ? adddata : (){},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: (penerima.text.isNotEmpty && idlagu.isNotEmpty) ?  Colors.black : Colors.grey,
+                      backgroundColor: (Datapesan.penerima.text.isNotEmpty && Datalagu.idlagu.isNotEmpty) ?  Colors.black : Colors.grey,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)
                       )
