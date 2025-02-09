@@ -19,4 +19,4 @@ Requirements:
   -  internet connection
 
 # Installasi
-  Dalam melakuakan instalasi silahkan melakukan request pull atau menginstall [aplikasi send the song ](https://github.com/imdito/sendthesongapp_muhammadpanditosetiawan_ITCMobile/blob/master/app-release.apk)
+  Dalam melakuakan instalasi silahkan menginstall [aplikasi send the song ](https://github.com/imdito/sendthesongapp_muhammadpanditosetiawan_ITCMobile/blob/master/app-release.apk)
