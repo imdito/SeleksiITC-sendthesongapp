@@ -65,7 +65,7 @@ class _AddState extends State<Add> {
             'access_token' : post.data['access_token']
           });
       if(index == 0){
-        Alertbox(pesanalertbox: 'error');
+        Alertbox(pesanalertbox: 'error', ikon: Icons.error,);
       }else{
         return gettoken(index--);
       }
@@ -95,7 +95,7 @@ class _AddState extends State<Add> {
       lagu = response.data['tracks']['items'];
           setState(() {});
     }catch(e){
-      return Alertbox(pesanalertbox: 'Errror, silahkan cek koneksi internet!');
+      return Alertbox(pesanalertbox: 'Errror, silahkan cek koneksi internet!', ikon: Icons.signal_wifi_connected_no_internet_4,);
     }
   }
 
@@ -109,7 +109,7 @@ class _AddState extends State<Add> {
         'https://seleksiitcpandito-default-rtdb.asia-southeast1.firebasedatabase.app/sendmsg.json',);
       getpesan = Datamsg.data;
       Map<String, dynamic> data = {
-          "penerima": Datapesan.penerima.text,
+          "penerima": Datapesan.penerima.text.toLowerCase(),
           "pesan": Datapesan.pesan.text,
           "link" : Datalagu.idlagu
       };
@@ -119,13 +119,13 @@ class _AddState extends State<Add> {
       search.text = '';
       Datalagu.idlagu = '';
       showDialog(context: context, builder: (context){
-        return Alertbox(pesanalertbox: 'Pesan sukses dikirm!');
+        return Alertbox(pesanalertbox: 'Pesan sukses dikirm!', ikon: Icons.done,);
 
       });
       setState(() {});
     }catch(error){
       showDialog(context: context, builder: (context){
-        return Alertbox(pesanalertbox: 'Maaf URL saat ini sedang tidak valid, silahkan periksa koneksi internet anda!');
+        return Alertbox(pesanalertbox: 'Maaf URL saat ini sedang tidak valid, silahkan periksa koneksi internet anda!', ikon: Icons.signal_wifi_connected_no_internet_4,);
 
       });
     }

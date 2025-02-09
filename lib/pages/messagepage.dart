@@ -56,7 +56,7 @@ class _msgpageState extends State<msgpage> {
           });
       //print(post);
       if(index == 0){
-        Alertbox(pesanalertbox: 'error');
+        Alertbox(pesanalertbox: 'error', ikon: Icons.error,);
       }else{
         return getsong(index--);
       }
@@ -94,7 +94,7 @@ class _msgpageState extends State<msgpage> {
                 ),
                 SizedBox(height: 15,),
                 Container(
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                   decoration: BoxDecoration(
                       color: Colors.green ,
                       borderRadius: BorderRadius.circular(8)
@@ -112,17 +112,29 @@ class _msgpageState extends State<msgpage> {
                           fontWeight: FontWeight.bold
                       ),),
                       Text(artist, style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 20,
                         fontFamily: 'Outfit',
                       ),),
                       SizedBox(
                         height: 50,
-                        width: 50,
+                        width: double.infinity,
                         child: InkWell(
                           onTap: (){
                             launchUrl(Uri.parse('https://open.spotify.com/track/${widget.link}'));
                           },
-                          child: Image.asset('assets/images/spotipay.png'),),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('Play on Spotify', style: TextStyle(
+                                fontSize: 10,
+                                fontFamily: 'Outfit',
+                                color: Colors.white
+                              ),
+
+                              ),
+                              Image.asset('assets/images/spotipay.png', width: 30,),
+                            ],
+                          ),),
                       )
 
                     ],

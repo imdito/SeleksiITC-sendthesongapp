@@ -17,9 +17,10 @@ class AppBarr extends StatelessWidget {
 }
 
 class Alertbox extends StatelessWidget {
-  const Alertbox({super.key, required this.pesanalertbox});
+  const Alertbox({super.key, required this.pesanalertbox, required this.ikon});
 
   final String pesanalertbox;
+  final IconData ikon;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class Alertbox extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Center(child: Icon(Icons.warning_amber_sharp, size: 90,color: Colors.white,),),
+            Center(child: Icon(ikon, size: 90,color: Colors.white,),),
             SizedBox(height: 20,),
             Text(pesanalertbox, style: TextStyle(color: Colors.white,fontSize: 20), textAlign: TextAlign.center,),
             SizedBox(height: 15,),

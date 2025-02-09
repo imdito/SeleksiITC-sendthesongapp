@@ -29,14 +29,14 @@ class SearchState extends State<Search> {
       Filtereddata = Datapesan.where((element) => element['penerima'] == searchtext.text).toList();
       if(Filtereddata.isEmpty){
         showDialog(context: context, builder: (context){
-          return Alertbox(pesanalertbox: 'Maaf penerima dengan nama ini tidak ditemukan :(');
+          return Alertbox(pesanalertbox: 'Maaf penerima dengan nama ini tidak ditemukan :(', ikon: Icons.no_accounts_outlined,);
         });
       }
       FocusScope.of(context).unfocus();
       setState((){});
     }catch(error){
       showDialog(context: context, builder: (context){
-        return Alertbox(pesanalertbox: "Maaf Url sedang tidak valid!");
+        return Alertbox(pesanalertbox: "Maaf Url sedang tidak valid!", ikon: Icons.signal_wifi_connected_no_internet_4_rounded,);
       });
     }
   }
@@ -74,36 +74,54 @@ class SearchState extends State<Search> {
                       ),)
                     ],
                   ),
+                  SizedBox(height: 20,),
                   Expanded(
                     child: ListView.builder(
                         itemCount: Filtereddata.length,
                         itemBuilder: (context, int index ){
-                          return InkWell( // tampilin pesan pesan dengan nama yang dicari
-                            onTap: (){
-                              FocusScopeNode focusScopeNode = FocusScope.of(context); // tutup keyboard
-                              if(!focusScopeNode.hasPrimaryFocus){
-                                focusScopeNode.unfocus();
-                              }
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context){
-                                    return msgpage(penerima: Filtereddata[index]['penerima'], pesan: Filtereddata[index]['pesan'], link: Filtereddata[index]['link'],);
-                                  }));
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 10),
-                              padding: EdgeInsets.only(top: 15, left: 20, right: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(8)
+                          return Column(
+                            children: [
+                              Container(
+
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(8)
+                                ),
+                                child: InkWell(
+                                  onTap: (){
+                                    FocusScopeNode focusScopeNode = FocusScope.of(context); // tutup keyboard
+                                    if(!focusScopeNode.hasPrimaryFocus){
+                                      focusScopeNode.unfocus();
+                                    }
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context){
+                                          return msgpage(penerima: Filtereddata[index]['penerima'], pesan: Filtereddata[index]['pesan'], link: Filtereddata[index]['link'],);
+                                        }));
+                                  },
+                                  child: SizedBox(
+                                    width: 300,
+                                    height: 130,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 10, top: 10),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                                        children: [
+                                          Text('To : ${Filtereddata[index]['penerima']}', style: TextStyle(fontSize: 20, fontFamily: 'Outfit'),),
+                                          SizedBox(height: 10,),
+                                          Text(Filtereddata[index]['pesan'], style: TextStyle(fontSize: 35, fontFamily: 'Beanie', height:1),
+                                              textAlign: TextAlign.left,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('To- ${Filtereddata[index]['penerima']}', style: TextStyle(fontSize: 20),),
-                                  Text(Filtereddata[index]['pesan'], style: TextStyle(fontSize: 35, fontFamily: 'Beanie'),textAlign: TextAlign.left, maxLines: 2, overflow: TextOverflow.ellipsis)
-                                ],
-                              ),
-                            ),
+                              SizedBox(height: 20,)
+                            ],
                           );
                         }
                     ),

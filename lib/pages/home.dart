@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
       setState((){});
     }catch(error){
       showDialog(context: context, builder: (context){
-        return Alertbox(pesanalertbox: "Maaf Url sedang tidak valid!");
+        return Alertbox(pesanalertbox: "Maaf Url sedang tidak valid!", ikon: Icons.public_off,);
       });
     }
   }
